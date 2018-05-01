@@ -5,19 +5,19 @@ import './main.css';
  class Board extends React.Component{
    constructor(){
      super();
-     this.state={comments:['111','222','333']};
+     this.state={comments:[]};
    }
 
    updateComment(newText,i){
-     console.log(newText);
-     // var arr =this.state.comments;
-     // arr[i]=newText
-     // this.setState({comments:arr});
+     // console.log(newText);
+     var arr =this.state.comments;
+     arr[i]=newText
+     this.setState({comments:arr});
    }
 
    removeComment(i){
     var arr=this.state.comments;
-    arr.splice(i,1,"");
+    arr.splice(i,1);
     this.setState({comments:arr});
     //console.log(i);
    }
@@ -25,8 +25,8 @@ import './main.css';
    eachComment(text,i){
      return(
        <Comment
-         deleteFormBoard={this.removeComment}
-         updateCommentText={this.updateComment}
+         deleteFormBoard={this.removeComment.bind(this)}
+         updateCommentText={this.updateComment.bind(this)}
          key={i} index={i}>{text}</Comment>
      );
    }
@@ -36,12 +36,13 @@ import './main.css';
      arr.push(text);
      // update state
      this.setState({comments:arr});
+     //console.log(text)
    }
 
    render(){
      return(
        <div>
-         <button onClick={this.add.bind(null,"Default text")} className="button-info create">Add New</button>
+         <button onClick={this.add.bind(this,"default comments")} className="button-info create">Add New</button>
          <div className="board">
            {
              this.state.comments.map(this.eachComment.bind(this))//在更新变量的时候需要使用。bind()实现数据更新。
